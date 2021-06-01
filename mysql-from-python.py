@@ -1,27 +1,26 @@
 import os
+import datetime
 import pymysql
 
-#GET username from Cloud9 workspace
-#Modify this if running on different machine
+# GET username from Cloud9 workspace
+# Modify this if running on different machine
 
 username = os.getenv('C9_USER')
 
-#Connect to the database
+# Connect to the database
 connection = pymysql.connect(host='localhost',
-                            user=username,
-                            password='',
-                            db='Chinook')
+                             user=username,
+                             password='',
+                             db='Chinook')
 
 try:
-    #RUN A QUERY
+    # RUN A QUERY
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
-
+        row = ("Bob", 31, "1990-01-06 23:01:11")
+        cursor.execute("INSERT INTO Friends VALUES (%s, %s, %s);", row)
+        connection.commit
+      
 finally:
-    #Close the connection regardless if above connection was a sucess
+    # Close the connection regardless if above connection was a sucess
     connection.close()
-
-
+    
